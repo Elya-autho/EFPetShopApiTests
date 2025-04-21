@@ -16,7 +16,7 @@ class TestPet:
             assert response.text=="Pet deleted", "Текст ошибки не совпал с ожидаемым"
 
     @allure.title("Попытка обновить несуществующего питомца")
-    def test_nonexistent_pet(self):
+    def test_update_nonexistent_pet(self):
         with allure.step("Отправка запроса на обновление несуществующего питомца"):
            payload = {"id": 9999,
                     "name": "Non-existent Pet",
