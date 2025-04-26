@@ -32,7 +32,7 @@ class TestPet:
         with allure.step("Проверка текстового содержимого ответа"):
             assert response.text == "Pet not found", "Текст ошибки не совпал с ожидаемым"
 
-    # @allure.title("Добавление нового питомца")
+    @allure.title("Добавление нового питомца")
     def test_add_pet(self):
         with allure.step("Подготовка данных для создания питомца"):
             payload = {"id": 1,
