@@ -7,7 +7,7 @@ PET_SCHEMA = {
         "name":{
             "type": "string"
         },
-        "categories":{
+        "category":{
             "type": "object",
             "properties":{
                 "id":{
