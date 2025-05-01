@@ -95,7 +95,7 @@ class TestPet:
         with allure.step("Проверка статуса ответа"):
             assert response.status_code == 200, "Код ответа не совпал с ожидаемым"
 
-        with allure.step("Отправка запроса на обновление инфрмации о питомце"):
+        with allure.step("Отправка запроса на обновление информации о питомце"):
                 payload = {"id": petId,
                            "name": "Buddy Updated",
                            "status": "sold"
@@ -109,7 +109,7 @@ class TestPet:
         with allure.step("Проверка обновления данных о питомце"):
             assert update_pet["id"] == payload["id"], "id питомца не совпадает с ожидаемым"
             assert update_pet["name"] == payload["name"], "имя питомца не совпадает с ожидаемым"
-            assert update_pet["status"] == payload["status"], "имя питомца не совпадает с ожидаемым"
+            assert update_pet["status"] == payload["status"], "статус питомца не совпадает с ожидаемым"
 
     @allure.title("Удаление питомца по ID")
     def test_delete_pet(self, create_pet):
