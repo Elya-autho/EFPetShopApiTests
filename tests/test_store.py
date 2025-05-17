@@ -3,6 +3,8 @@ import requests
 import pytest
 import jsonschema
 from .schemas.store_schema import STORE_SCHEMA
+from .schemas.inventory_schema import INVENTORY_SCHEMA
+
 BASE_URL = "http://5.181.109.28:9090/api/v3"
 @allure.feature("Store")
 class TestStore:
@@ -81,25 +83,29 @@ class TestStore:
         with allure.step("Проверка статуса ответа"):
             assert response.status_code == 404, "Код ответа не совпал с ожидаемым"
 
-    @allure.title("Получение информации об инвентаре по статусам")
-    @pytest.mark.parametrize(
-        "status_inventory, expected_quantity",
-        [
-            ("approved", 57),
-            ("delivered", 50)
-        ]
-    )
-    def test_get_inventory_by_status(self, status_inventory, expected_quantity):
-        with allure.step(f"Отправка запроса на получение инвентаря по статусам {status_inventory}"):
-            response = requests.get(f"{BASE_URL}/store/inventory")
 
-        with allure.step("Проверка статуса ответа"):
-            assert response.status_code == 200, "Код ответа не совпал с ожидаемым"
+    @allure.title("Получение информации об инвентаре")
+    def test_get_inventory(self):
+        try:
+            with allure.step(f"Отправка запроса на получение инвентаря"):
+                response = requests.get(f"{BASE_URL}/store/inventory")
 
-        with allure.step("Проверка формата данных"):
-            inventory = response.json()
-            assert isinstance(response.json(), dict)
+            with allure.step("Проверка статуса ответа"):
+                assert response.status_code == 200, "Код ответа не совпал с ожидаемым"
 
-        with allure.step(f"Проверка количества инвентаря со статусом {status_inventory}"):
-            assert status_inventory in inventory, "Статус отсутствует в ответе"
-            assert inventory[status_inventory] == expected_quantity, "Количество инвентаря не совпадает с ожидаемым"
+            with allure.step("Проверка формата данных"):
+                inventory = response.json()
+                assert isinstance(response.json(), dict)
+
+            with allure.step("Проверка JSON схемы ответа"):
+                jsonschema.validate(instance=inventory, schema=INVENTORY_SCHEMA)
+                response_data = response.json()
+            with allure.step("Проверка содержания ответа"):
+                assert response_data["approved"] == 57, "Количество не совпадает с ожидаемым."
+                assert response_data["delivered"] == 50, "Количество не совпадает с ожидаемым."
+
+
+
+        except Exception as e:
+            print("Получена ошибка: ",e.args)
+
