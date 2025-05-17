@@ -105,7 +105,6 @@ class TestStore:
                 assert response_data["delivered"] == 50, "Количество не совпадает с ожидаемым."
 
 
-
         except Exception as e:
             print("Получена ошибка: ",e.args)
 
