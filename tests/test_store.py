@@ -86,7 +86,7 @@ class TestStore:
 
     @allure.title("Получение информации об инвентаре")
     def test_get_inventory(self):
-        try:
+
             with allure.step(f"Отправка запроса на получение инвентаря"):
                 response = requests.get(f"{BASE_URL}/store/inventory")
 
@@ -103,6 +103,4 @@ class TestStore:
 
 
 
-        except Exception as e:
-            print("Получена ошибка: ",e.args)
 
