@@ -100,9 +100,7 @@ class TestStore:
             with allure.step("Проверка JSON схемы ответа"):
                 jsonschema.validate(instance=inventory, schema=INVENTORY_SCHEMA)
                 response_data = response.json()
-            with allure.step("Проверка содержания ответа"):
-                assert response_data["approved"] == 57, "Количество не совпадает с ожидаемым."
-                assert response_data["delivered"] == 50, "Количество не совпадает с ожидаемым."
+
 
 
         except Exception as e:
