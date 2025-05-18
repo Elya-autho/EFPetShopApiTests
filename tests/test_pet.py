@@ -104,8 +104,8 @@ class TestPet:
                 response = requests.put(url=f"{BASE_URL}/pet",json=payload)
                 update_pet=requests.get(f"{BASE_URL}/pet/{petId}").json()
 
-        # with allure.step("Проверка статуса ответа после обновления"):
-        #     assert response.status_code == 200, "Код ответа не совпал с ожидаемым"
+        with allure.step("Проверка статуса ответа после обновления"):
+            assert response.status_code == 200, "Код ответа не совпал с ожидаемым"
 
         with allure.step("Проверка обновления данных о питомце"):
             assert update_pet["id"] == payload["id"], "id питомца не совпадает с ожидаемым"
